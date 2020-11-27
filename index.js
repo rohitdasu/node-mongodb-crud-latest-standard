@@ -33,6 +33,7 @@ app.use("/api/secure", secureRoutes);
 /**
  * root api
  */
+
 app.get("/", (req, res) => {
   res.send("this is root api");
 });

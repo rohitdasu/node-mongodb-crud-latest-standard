@@ -7,7 +7,18 @@ router.get("/", (req, res) => {
   res.send("auth's Route");
 });
 
-router.post("/users/create", (req, res) => {
+const validateUserDetails = (req, res, next) => {
+  if(req.body.length < 1){
+    next();
+  }
+  else{
+    res.status(400).json({
+      status:'failed',message:'please send data'
+    })
+  }
+}
+
+router.post("/users/create", validateUserDetails, (req, res) => {
 
   const user = new users({
     _id: new mongoose.Types.ObjectId,
