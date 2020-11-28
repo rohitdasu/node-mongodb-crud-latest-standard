@@ -7,6 +7,10 @@ router.get("/", (req, res) => {
   res.send("auth's Route");
 });
 
+/*
+*Middleware Function, which will first execute on api call
+ */
+
 const validateUserDetails = (req, res, next) => {
   if(req.body.length < 1){
     next();
@@ -18,6 +22,9 @@ const validateUserDetails = (req, res, next) => {
   }
 }
 
+/**
+ *  Create Operation
+ */
 router.post("/users/create", validateUserDetails, (req, res) => {
 
   const user = new users({
@@ -37,6 +44,9 @@ router.post("/users/create", validateUserDetails, (req, res) => {
 
 })
 
+/**
+ *  Read Operation
+ */
 router.get("/users", (req,res) => {
   users.find().then(value => {
     res.status(200).json({status:'success',data:value});
@@ -45,6 +55,9 @@ router.get("/users", (req,res) => {
   })
 })
 
+/**
+ *  Read One Operation
+ */
 router.get("/users/id/:id", (req,res) => {
   const id = req.params.id;
   users.findById(id).then(value => {
@@ -54,6 +67,9 @@ router.get("/users/id/:id", (req,res) => {
   })
 })
 
+/**
+ *  Delete Operation
+ */
 router.delete("/users/id/:id", (req, res) => {
   const id = req.params.id;
   users.deleteOne({_id:id}).then(value => {
@@ -63,6 +79,9 @@ router.delete("/users/id/:id", (req, res) => {
   });
 });
 
+/**
+ *  Update Operation
+ */
 router.patch("/users/id/:id", (req, res) => {
   const id = req.params.id;
   const updateOps = req.body;
